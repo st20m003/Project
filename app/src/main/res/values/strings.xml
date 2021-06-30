@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Project</string>
     <string name="dashboard">Dashboard</string>
+    <string name="go_to_start">Go to Start</string>
+    <string name="go_to_monitoring">Go to monitoring</string>
+    <string name="go_to_data">Go To Data</string>
+    <string name="sensordashboard">SensorDashboard</string>
 </resources>
