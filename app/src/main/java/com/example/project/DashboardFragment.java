@@ -14,6 +14,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project.dao.UserDao;
+
 public class DashboardFragment extends Fragment {
     private MainViewModel mainViewModel;
     @Nullable
@@ -43,9 +45,11 @@ public class DashboardFragment extends Fragment {
 
         });
 
-        mainViewModel = new ViewModelProvider(this,
-                ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())
-        ).get(MainViewModel.class);
+
+
+
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         final TextView vendor = view.findViewById(R.id.vendor);
         final TextView name = view.findViewById(R.id.name);
@@ -54,17 +58,30 @@ public class DashboardFragment extends Fragment {
         final TextView maxrange  = view.findViewById(R.id.maxrange);
         final TextView power = view.findViewById(R.id.power);
         final TextView xyz = view.findViewById(R.id.xyz);
+        view.findViewById(R.id.buttonON).setOnClickListener(v -> {
+            mainViewModel.accelerationLiveData.observe(getViewLifecycleOwner(), (accelerationInformation) -> {
+                vendor.setText("Vendor " + accelerationInformation.getSensor().getVendor());
+                name.setText("Name " + accelerationInformation.getSensor().getName());
+                version.setText("Version " + accelerationInformation.getSensor().getVersion());
+                resolution.setText("Resolution " + accelerationInformation.getSensor().getResolution());
+                maxrange.setText("MaxRange " + accelerationInformation.getSensor().getMaximumRange());
+                power.setText("Power " + accelerationInformation.getSensor().getPower());
+                xyz.setText("X: " + accelerationInformation.getX() + " Y: " + accelerationInformation.getY() + " Z: " + accelerationInformation.getZ());
 
-        mainViewModel.accelerationLiveData.observe(getViewLifecycleOwner(), (accelerationInformation) -> {
-            vendor.setText("Vendor " + accelerationInformation.getSensor().getVendor());
-            name.setText("Name " + accelerationInformation.getSensor().getName());
-            version.setText("Version " + accelerationInformation.getSensor().getVersion());
-            resolution.setText("Resolution " + accelerationInformation.getSensor().getResolution());
-            maxrange.setText("MaxRange " + accelerationInformation.getSensor().getMaximumRange());
-            power.setText("Power " + accelerationInformation.getSensor().getPower());
-            xyz.setText("X: " + accelerationInformation.getX() + " Y: " + accelerationInformation.getY() + " Z: " + accelerationInformation.getZ());
-
+            });
         });
+        view.findViewById(R.id.buttonOFF).setOnClickListener(v -> {
+            mainViewModel.accelerationLiveData.removeObservers(getViewLifecycleOwner());
+                });
+
 
     }
+    private class PrimeRunnable implements Runnable {
+
+        @Override
+        public void run() {
+
+        }
+    }
+
 }

@@ -6,12 +6,17 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-public class MainViewModel extends AndroidViewModel {
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class MainViewModel extends BaseViewModel {
+
+
     final LiveData<AccelerationInformation> accelerationLiveData;
 
     public MainViewModel(@NonNull Application application) {
@@ -19,12 +24,31 @@ public class MainViewModel extends AndroidViewModel {
         accelerationLiveData = new AccelerationLiveData(application.getApplicationContext());
     }
 
-    private final static class AccelerationLiveData extends LiveData<AccelerationInformation> {
+
+    private final class AccelerationLiveData extends LiveData<AccelerationInformation> {
+        public AtomicBoolean active = new AtomicBoolean();
         private final AccelerationInformation accelerationInformation = new AccelerationInformation();
         private SensorManager sm;
         private Sensor accelerometer;
         private Sensor gravitySensor;
         private float[] gravity;
+        private Handler handler = new Handler(Looper.getMainLooper());
+        public void insertData(AccelerationInformation accelerationInformation) {
+            Runnable r = () -> {
+                getDatabase().getUserDao().insert(accelerationInformation);
+                if (active.get()) {
+                    handler.post(() -> {
+                        setValue(accelerationInformation);
+                    });
+                }
+
+            };
+            Thread t = new Thread(r);
+            t.start();
+        }
+
+
+
         private SensorEventListener listener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -61,6 +85,7 @@ public class MainViewModel extends AndroidViewModel {
 
         @Override
         protected void onActive() {
+            active.set(true);
             super.onActive();
             sm.registerListener(listener, gravitySensor, SensorManager.SENSOR_DELAY_NORMAL);
             sm.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
@@ -68,6 +93,7 @@ public class MainViewModel extends AndroidViewModel {
 
         @Override
         protected void onInactive() {
+            active.set(false);
             super.onInactive();
             sm.unregisterListener(listener);
         }
@@ -91,4 +117,5 @@ public class MainViewModel extends AndroidViewModel {
         }
 
     }
+
 }
