@@ -12,40 +12,51 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.example.project.dao.UserDao;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainViewModel extends BaseViewModel {
 
-
+    private Handler handler = new Handler(Looper.getMainLooper());
     final LiveData<AccelerationInformation> accelerationLiveData;
+
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         accelerationLiveData = new AccelerationLiveData(application.getApplicationContext());
     }
 
+    public LiveData<AccelerationInformation> accelerationInsert() {
+        return accelerationLiveData;
+    }
 
-    private final class AccelerationLiveData extends LiveData<AccelerationInformation> {
-        public AtomicBoolean active = new AtomicBoolean();
+
+    public final class AccelerationLiveData extends LiveData<AccelerationInformation> {
         private final AccelerationInformation accelerationInformation = new AccelerationInformation();
         private SensorManager sm;
         private Sensor accelerometer;
         private Sensor gravitySensor;
         private float[] gravity;
-        private Handler handler = new Handler(Looper.getMainLooper());
-        public void insertData(AccelerationInformation accelerationInformation) {
+
+        public void start() {
             Runnable r = () -> {
                 getDatabase().getUserDao().insert(accelerationInformation);
-                if (active.get()) {
-                    handler.post(() -> {
+                                    handler.post(() -> {
                         setValue(accelerationInformation);
                     });
-                }
 
             };
             Thread t = new Thread(r);
             t.start();
         }
+
+        public void delete() {
+            getDatabase().getUserDao().deleteAll();
+        }
+        
+
+
 
 
 
@@ -58,6 +69,7 @@ public class MainViewModel extends BaseViewModel {
                         accelerationInformation.setXYZ(values[0], values[1], values[2]);
                         accelerationInformation.setSensor(event.sensor);
                         setValue(accelerationInformation);
+                        start();
                         break;
                     case Sensor.TYPE_GRAVITY:
                         gravity = event.values;
@@ -85,7 +97,7 @@ public class MainViewModel extends BaseViewModel {
 
         @Override
         protected void onActive() {
-            active.set(true);
+
             super.onActive();
             sm.registerListener(listener, gravitySensor, SensorManager.SENSOR_DELAY_NORMAL);
             sm.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
@@ -93,7 +105,7 @@ public class MainViewModel extends BaseViewModel {
 
         @Override
         protected void onInactive() {
-            active.set(false);
+
             super.onInactive();
             sm.unregisterListener(listener);
         }

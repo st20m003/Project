@@ -7,4 +7,6 @@
     <string name="sensordashboard">SensorDashboard</string>
     <string name="start">START</string>
     <string name="stop">STOP</string>
+    <string name="deletedata">DeleteData</string>
+    <string name="delete_data">DELETE DATA</string>
 </resources>
