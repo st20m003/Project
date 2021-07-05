@@ -11,8 +11,8 @@ public class Application extends android.app.Application {
         muFDatabase = Room
                 .databaseBuilder(this, MuFDatabase.class, "data")
                 .build();
-    }
 
+    }
     public MuFDatabase getDatabase() {
         return muFDatabase;
     }

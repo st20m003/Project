@@ -13,12 +13,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.RoomDatabase;
 
 import com.example.project.dao.UserDao;
 
 public class DashboardFragment extends Fragment {
     private MainViewModel mainViewModel;
     private MainViewModel.AccelerationLiveData accelerationLiveData;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class DashboardFragment extends Fragment {
         final TextView xyz = view.findViewById(R.id.xyz);
 
 
+
         view.findViewById(R.id.buttonON).setOnClickListener(v -> {
 
             accelerationLiveData = (MainViewModel.AccelerationLiveData) mainViewModel.accelerationInsert();
@@ -79,7 +82,7 @@ public class DashboardFragment extends Fragment {
         });
 
         view.findViewById(R.id.buttonDelete).setOnClickListener(v -> {
-            accelerationLiveData.delete();
+
         });
         return view;
     }

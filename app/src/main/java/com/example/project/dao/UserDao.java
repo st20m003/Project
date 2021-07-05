@@ -6,10 +6,10 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.RoomDatabase;
 
 import com.example.project.AccelerationInformation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -23,6 +23,9 @@ public abstract class UserDao {
 
     @Query("SELECT * FROM acceleration WHERE z=:z")
     public abstract LiveData<List<AccelerationInformation>> getZ(float z);
+
+    @Query("SELECT * FROM acceleration")
+    public abstract LiveData<List<AccelerationInformation>> getAllData();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(AccelerationInformation accelerationInformation);

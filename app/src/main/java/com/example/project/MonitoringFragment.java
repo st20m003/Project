@@ -14,10 +14,13 @@ import androidx.navigation.Navigation;
 
 public class MonitoringFragment extends Fragment {
     private Application application;
+    private MuFDatabase muFDatabase;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_monitoringfragment, container, false);
+        //TextView data = view.findViewById(R.id.data);
+        //data.(application.getDatabase().getUserDao().getAllData());
         return view;
     }
 
@@ -29,5 +32,6 @@ public class MonitoringFragment extends Fragment {
                     .navigate(MonitoringFragmentDirections.actionMonitoringFragmentToStartFragment());
 
         });
+
     }
 }

@@ -11,6 +11,7 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.room.RoomDatabase;
 
 import com.example.project.dao.UserDao;
 
@@ -39,6 +40,7 @@ public class MainViewModel extends BaseViewModel {
         private Sensor gravitySensor;
         private float[] gravity;
 
+
         public void start() {
             Runnable r = () -> {
                 getDatabase().getUserDao().insert(accelerationInformation);
@@ -50,6 +52,8 @@ public class MainViewModel extends BaseViewModel {
             Thread t = new Thread(r);
             t.start();
         }
+
+
 
         public void delete() {
             getDatabase().getUserDao().deleteAll();
