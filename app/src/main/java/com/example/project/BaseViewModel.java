@@ -11,6 +11,6 @@ public abstract class BaseViewModel extends AndroidViewModel {
     }
 
     public MuFDatabase getDatabase () {
-        return ((com.example.project.Application)getApplication()).getDatabase();
+        return ((MuFApplication)getApplication()).getDatabase();
     }
 }

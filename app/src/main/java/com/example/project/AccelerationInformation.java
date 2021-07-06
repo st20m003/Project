@@ -69,4 +69,13 @@ public class AccelerationInformation {
         this.z = z;
     }
 
+    @Override
+    public String toString() {
+        return "AccelerationInformation{" +
+                "id=" + id +
+                ", x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
+    }
 }

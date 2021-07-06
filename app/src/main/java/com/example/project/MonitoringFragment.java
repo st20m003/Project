@@ -13,14 +13,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 public class MonitoringFragment extends Fragment {
-    private Application application;
-    private MuFDatabase muFDatabase;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_monitoringfragment, container, false);
-        //TextView data = view.findViewById(R.id.data);
-        //data.(application.getDatabase().getUserDao().getAllData());
+        TextView data = view.findViewById(R.id.data);
+        ((MuFApplication)getActivity().getApplication()).getDatabase().getUserDao().getAllData().observe(getViewLifecycleOwner(), accelerationInformations -> {
+            data.setText(accelerationInformations.toString());
+        });
         return view;
     }
 

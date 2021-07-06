@@ -82,7 +82,7 @@ public class DashboardFragment extends Fragment {
         });
 
         view.findViewById(R.id.buttonDelete).setOnClickListener(v -> {
-
+            accelerationLiveData.delete();
         });
         return view;
     }

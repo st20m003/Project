@@ -2,7 +2,7 @@ package com.example.project;
 
 import androidx.room.Room;
 
-public class Application extends android.app.Application {
+public class MuFApplication extends android.app.Application {
 
     private MuFDatabase muFDatabase;
     @Override

@@ -33,4 +33,7 @@ public abstract class UserDao {
     @Query("DELETE FROM acceleration")
     public abstract void deleteAll();
 
+    //@Query("DELETE FROM acceleration")
+    //public abstract void deleteAll(AccelerationInformation accelerationInformation);
+
 }

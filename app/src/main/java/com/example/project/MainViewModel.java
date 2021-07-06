@@ -56,7 +56,11 @@ public class MainViewModel extends BaseViewModel {
 
 
         public void delete() {
-            getDatabase().getUserDao().deleteAll();
+            Runnable v = () -> {
+                getDatabase().getUserDao().deleteAll();
+            };
+            Thread t = new Thread(v);
+            t.start();
         }
         
 
