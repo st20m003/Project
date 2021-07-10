@@ -8,7 +8,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sensordashboard" />
+        android:text="@string/dashboard" />
 
     <TextView
         android:id="@+id/vendor"
@@ -75,4 +75,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/delete_data" />
+
+    <Button
+        android:id="@+id/lustig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/wie_zieht_ein_informatiker_seine_freundin_aus" />
 </LinearLayout>

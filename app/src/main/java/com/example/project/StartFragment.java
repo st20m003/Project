@@ -23,7 +23,7 @@ public class StartFragment extends Fragment {
         final NavController controller = Navigation.findNavController(view);
         view.findViewById(R.id.button1).setOnClickListener(button1 -> {
             controller
-                    .navigate(StartFragmentDirections.actionStartFragmentToDashboardFragment("Titel"));
+                    .navigate(StartFragmentDirections.actionStartFragmentToDashboardFragment("Zur Datenaufzeichnung <START> drücken\nZum Anhalten <STOP> drücken\nZum Löschen <DELETE DATA> drücken\nZur Datenübersicht <GO TO MONITORING> drücken" ));
         });
         view.findViewById(R.id.button4).setOnClickListener(button4 -> {
             controller

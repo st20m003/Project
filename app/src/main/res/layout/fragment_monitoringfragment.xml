@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/data"
         android:layout_width="match_parent"
-        android:layout_height="627dp"
+        android:layout_height="536dp"
         android:text="" />
 
 
@@ -16,5 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/go_to_start" />
+
+    <Button
+        android:id="@+id/rofl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/was_sind_acht_hobbits" />
 
 </LinearLayout>
